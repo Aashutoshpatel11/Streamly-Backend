@@ -32,6 +32,8 @@ app.use( async(req, res, next) => {
   next()
 } )
 
+export default app
+
 
 
 // connectDb()
