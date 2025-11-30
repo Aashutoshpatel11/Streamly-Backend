@@ -37,6 +37,8 @@ app.use((req, res, next) => {
 //     throw(error);
 // } )
 
+export default app;
+
 
 
 
