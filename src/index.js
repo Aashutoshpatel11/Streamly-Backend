@@ -1,29 +1,14 @@
 import dotenv from 'dotenv'
-
 dotenv.config({ path: './.env' })
-import {app} from './app.js'
 
-let isConneted = false
+import { app } from "../app.js";
+import { connectDB } from './db/connectDB.js';
 
-const connectDb = async ()=>{
-    try {
-        const dbConnectioninstance = await mongoose.connect( `${process.env.DATABASE_URI}/${DB_NAME}`, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        } );
-        isConneted = true
-        console.log( '\nDB Connected :: Hosted At : ', dbConnectioninstance.connection.host, '\n' );
-    } catch (error) {
-        console.log('DB Connection :: ERROR :: ',error)
-    }
+export default async function handler(req, res) {
+  await connectDB();
+  return app(req, res); 
 }
 
-app.use((req, res, next) => {
-    if(!isConneted){
-        connectDb()
-    }
-    next()
-})
 
 
 // connectDb()
@@ -37,7 +22,6 @@ app.use((req, res, next) => {
 //     throw(error);
 // } )
 
-export default app;
 
 
 
