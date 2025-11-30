@@ -5,7 +5,7 @@ import { app } from "../app.js";
 
 let isConnected = false
 
-connectDB = async () => {
+async function connectDB(){
   if (isConnected) {
     return;
   }
@@ -16,7 +16,7 @@ connectDB = async () => {
         useUnifiedTopology: true
     } );
 
-    isConnected = db.connections[0].readyState === 1;
+    isConnected = true
     console.log("DB Connected :: Hosted At:", db.connection.host);
 
   } catch (error) {
@@ -25,9 +25,9 @@ connectDB = async () => {
   }
 };
 
-app.use( async(req, res, next) => {
+app.use( (req, res, next) => {
   if(!isConnected){
-    await connectDB()
+    connectDB()
   }
   next()
 } )
