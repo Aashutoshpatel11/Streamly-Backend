@@ -6,6 +6,7 @@ import connectDb from './db/index.js'
 import {app} from './app.js'
 
 let isConneted = false
+
 const connectDb = async ()=>{
     try {
         const dbConnectioninstance = await mongoose.connect( `${process.env.DATABASE_URI}/${DB_NAME}`, {
@@ -15,8 +16,7 @@ const connectDb = async ()=>{
         isConneted = true
         console.log( '\nDB Connected :: Hosted At : ', dbConnectioninstance.connection.host, '\n' );
     } catch (error) {
-        console.log('DB Connection :: ERROR :: ',error);
-        process.exit(101);
+        console.log('DB Connection :: ERROR :: ',error)
     }
 }
 
