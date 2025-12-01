@@ -2,7 +2,7 @@ import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv'
-import {DB_NAME} from '../src/constants.js'
+import {DB_NAME} from './constants.js'
 dotenv.config({ path: './.env' })
 
 const app = express()
