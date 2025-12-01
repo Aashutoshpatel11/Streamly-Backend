@@ -1,9 +1,39 @@
 import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser";
+import dotenv from 'dotenv'
+dotenv.config({ path: './.env' })
 
 const app = express()
 
+let isConnected = false
+
+async function connectDB(){
+  if (isConnected) {
+    return;
+  }
+
+  try {
+    const db = await mongoose.connect( `${process.env.DATABASE_URI}/${DB_NAME}`, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    } );
+
+    isConnected = true
+    console.log("DB Connected :: Hosted At:", db.connection.host);
+
+  } catch (error) {
+    console.log("DB Connection Error:", error);
+    throw error;
+  }
+};
+
+app.use( (req, res, next) => {
+  if(!isConnected){
+    connectDB()
+  }
+  next()
+} )
 app.use( cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true
@@ -37,4 +67,4 @@ app.use( "/api/v1/subscription", subscriptionRouter )
 app.use( '/api/v1/dashboard' , dashboardRouter ) 
  
 
-export  {app};
+export default app
