@@ -3,6 +3,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv'
 import {DB_NAME} from './constants.js'
+import mongoose from "mongoose";
 dotenv.config({ path: './.env' })
 
 const app = express()
